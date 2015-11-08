@@ -16,20 +16,20 @@ function Programme(programme) {
     }
 
     this.isInComfortMode = function(date) {
-        if(self.inOverridePeriod(date)) {
+        if(self.isInOverridePeriod(date)) {
             return programme.override.comfortState;
         }
         else {
-            return inAnyComfortPeriodForDate(date);
+            return isInAnyComfortPeriodForDate(date);
         }
     }
 
-    this.inOverridePeriod = function(date) {
+    this.isInOverridePeriod = function(date) {
         return programme.override && programme.override.until && beforeOverrideEnd(date, programme.override.until);
     }
 
     function getOverriddenTemperature(date) {
-        if(self.inOverridePeriod(date)) {
+        if(self.isInOverridePeriod(date)) {
             return getTemperatureForComfortState(programme.override.comfortState);
         }
         return NaN;
@@ -40,7 +40,7 @@ function Programme(programme) {
     }
 
     function getProgrammeTemperature(date) {
-        return getTemperatureForComfortState(inAnyComfortPeriodForDate(date));
+        return getTemperatureForComfortState(isInAnyComfortPeriodForDate(date));
     }
 
     function getTemperatureForComfortState(comfortState) {
@@ -57,14 +57,14 @@ function Programme(programme) {
         return DateUtil.isFirstDateBeforeSecondDate(date, end);
     }
 
-    function inComfortPeriod(date, comfortPeriod) {
+    function isInComfortPeriod(date, comfortPeriod) {
         return laterThanComfortPeriodStart(date, comfortPeriod) && earlierThanComfortPeriodEnd(date, comfortPeriod);
     }
 
-    function inAnyComfortPeriodForDate(date) {
+    function isInAnyComfortPeriodForDate(date) {
         var periodsForToday = programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods;
         for(var i = 0; i < periodsForToday.length; ++i) {
-            if(inComfortPeriod(date, periodsForToday[i])) {
+            if(isInComfortPeriod(date, periodsForToday[i])) {
                 return true;
             }
         }
