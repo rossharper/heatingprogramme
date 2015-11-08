@@ -2,8 +2,8 @@ var fs          = require('fs'),
     Programme   = require('./Programme').Programme,
     FileWatcher = require('./FileWatcher');
 
-var DEFAULT_PROGRAMME_FILE = "defaultProgramme.json";
-var PROGRAMME_FILE = __dirname + "/programme.json";
+var DEFAULT_PROGRAMME_FILE = __dirname + "/defaultProgramme.json";
+var PROGRAMME_FILE = "programme.json";
 
 function ProgrammeProvider(programmeDataPath) {
 
