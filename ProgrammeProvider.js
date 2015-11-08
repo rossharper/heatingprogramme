@@ -7,64 +7,62 @@ var PROGRAMME_FILE = "programme.json";
 
 function ProgrammeProvider(programmeDataPath) {
 
-    var programme = new Programme(loadProgrammeFileSync());
+    var programme;
     watchProgrammeFile();
 
-    this.getProgramme = function() {
-        return programme;
+    this.getProgramme = function(callback) {
+        if(programme !== undefined) {
+            callback(programme);
+        }
+        else {
+            loadProgrammeFile(function(programmeData) {
+                programme = new Programme(programmeData);
+                callback(programme);
+            });
+        }
     }
 
     function getProgrammeDataFilePath() {
         return programmeDataPath + "/" + PROGRAMME_FILE;
     }
 
-    function readProgrammeFileSync(programmeFilePath) {
-        var file = fs.readFileSync(programmeFilePath, "utf8");
-        return JSON.parse(file);
-    }
-
-    function loadProgrammeFileSync() {
-        var programmeFilePath = getProgrammeDataFilePath();
-        try{
-            return readProgrammeFileSync(programmeFilePath);
-        }
-        catch(e) {
-            if (e.code === 'ENOENT') {
-                console.log("Programme data file missing: " + programmeFilePath);
-                return readProgrammeFileSync(DEFAULT_PROGRAMME_FILE);
-            } else {
-                throw e;
-            }
-        }
-    }
-
     function readProgrammeFile(programmeFilePath, callback) {
         fs.readFile(programmeFilePath, function (err, data) {
-            if (err) throw err;
-            callback(JSON.parse(data));
+            if(err) {
+                callback(err, null);
+            }
+            else {
+                callback(null, JSON.parse(data));
+            }
         });
     }
 
     function loadProgrammeFile(callback) {
         var programmeFilePath = getProgrammeDataFilePath();
-        try{
-            readProgrammeFile(programmeFilePath, callback);
-        }
-        catch(e) {
-            if (e.code === 'ENOENT') {
-                console.log("Programme data file missing: " + programmeFilePath);
-                readProgrammeFile(DEFAULT_PROGRAMME_FILE, callback);
-            } else {
-                throw e;
+
+        readProgrammeFile(programmeFilePath, function(err, programmeData) {
+            if(err) {
+                if(err.code === 'ENOENT') {
+                    console.log("Programme data file missing: " + programmeFilePath);
+                    readProgrammeFile(DEFAULT_PROGRAMME_FILE, function(err, programmeData) {
+                        if(err) throw err;
+                        callback(programmeData);
+                    });
+                }
+                else {
+                    throw err;
+                }
             }
-        }
+            else {
+                callback(programmeData);
+            }
+        });
     }
 
     function onProgrammeFileChange() {
         console.log("Programme file changed. Reloading.");
-        //programme = new Programme(loadProgrammeFileSync());
-        loadProgrammeFile(function(programmeJson) {
-            programme = new Programme(programmeJson);
+        loadProgrammeFile(function(programmeData) {
+            programme = new Programme(programmeData);
         });
     }
 
