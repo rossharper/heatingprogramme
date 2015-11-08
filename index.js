@@ -1,7 +1,9 @@
 var Programme = require("./Programme").Programme,
-    ProgrammeProvider = require("./ProgrammeProvider").ProgrammeProvider;
+    ProgrammeFileLoader = require("./ProgrammeFileLoader"),
+    ProgrammeChangeWatcher = require("./ProgrammeChangeWatcher");
 
 module.exports = {
     Programme : Programme,
-    ProgrammeProvider : ProgrammeProvider
+    ProgrammeFileLoader : ProgrammeFileLoader,
+    ProgrammeChangeWatcher : ProgrammeChangeWatcher
 }
