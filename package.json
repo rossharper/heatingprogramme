@@ -1,11 +1,15 @@
 {
   "name": "heatingprogramme",
   "version": "1.0.0",
-  "description": "",
+  "description": "Module for loading and handling a heating programme/schedule.",
   "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://rossharper@github.com/rossharper/heatingprogramme.git"
   },
-  "author": "Ross Harper <ross@rossharper.net>"
+  "author": "Ross Harper <ross@rossharper.net>",
+  "dependencies": {
+    "dateutil": "rossharper/dateutil"
+  },
+  "license": "Apache-2.0"
 }

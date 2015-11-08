@@ -1,4 +1,4 @@
-var DateUtil = require('./DateUtil');
+var DateUtil = require('dateutil');
 
 function Programme(programme) {
     this.getCurrentTargetTemperature = function(date) {
