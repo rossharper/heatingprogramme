@@ -1,4 +1,7 @@
-var Programme = require("./Programme").Programme
+var Programme = require("./Programme").Programme,
+    ProgrammeProvider = require("./ProgrammeProvider");
+    
 module.exports = {
-    Programme : Programme
+    Programme : Programme,
+    ProgrammeProvider : ProgrammeProvider
 }
