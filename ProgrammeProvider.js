@@ -14,19 +14,21 @@ function ProgrammeProvider(programmeDataPath) {
             callback(programme);
         }
         else {
-            ProgrammeFileLoader.loadProgramme(programmeDataPath, function(loadedProgramme) {
-                programme = loadedProgramme;
-                callback(programme);
-            });
+            loadProgramme(callback);
         }
+    }
+
+    function loadProgramme(callback) {
+        ProgrammeFileLoader.loadProgramme(programmeDataPath, function(loadedProgramme) {
+            programme = loadedProgramme;
+            callback(programme);
+        });
     }
 
     function onProgrammeFileChange() {
         console.log("Programme file changed. Reloading.");
 
-        ProgrammeFileLoader.loadProgramme(programmeDataPath, function(loadedProgramme) {
-            programme = loadedProgramme;
-        });
+        loadProgramme();
     }
 
     function watchProgrammeFile() {
