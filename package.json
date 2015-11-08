@@ -3,5 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://rossharper@github.com/rossharper/heatingprogramme.git"
+  },
   "author": "Ross Harper <ross@rossharper.net>"
 }
