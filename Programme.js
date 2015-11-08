@@ -25,7 +25,10 @@ function Programme(programme) {
     }
 
     this.isInOverridePeriod = function(date) {
-        return programme.override && programme.override.until && beforeOverrideEnd(date, programme.override.until);
+        return (
+            programme.override !== undefined
+            && programme.override.until !== undefined
+            && beforeOverrideEnd(date, programme.override.until));
     }
 
     function getOverriddenTemperature(date) {
