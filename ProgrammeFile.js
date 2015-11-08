@@ -7,7 +7,7 @@ function getProgrammeDataFilePath(programmeDataPath) {
 
 module.exports = {
     getProgrammeDataFilePath : getProgrammeDataFilePath,
-    getDefaultProgrammeDataFilePath : funtion() {
+    getDefaultProgrammeDataFilePath : function() {
         return DEFAULT_PROGRAMME_FILE;
     }
 }
