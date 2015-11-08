@@ -1,5 +1,5 @@
 var FileWatcher = require('./FileWatcher');
-var ProgrammeFileLoader = require('./ProgrammeFileLoader');
+var ProgrammeFile = require('./ProgrammeFile');
 
 function loadProgramme(programmeDataPath, callback) {
     ProgrammeFileLoader.loadProgramme(programmeDataPath, function(loadedProgramme) {
@@ -9,7 +9,7 @@ function loadProgramme(programmeDataPath, callback) {
 }
 
 function watchProgrammeFile(programmeDataPath, onProgrammeChange) {
-    FileWatcher.watchFile(ProgrammeFileLoader.getProgrammeDataFilePath(programmeDataPath), function() {
+    FileWatcher.watchFile(ProgrammeFile.getProgrammeDataFilePath(programmeDataPath), function() {
         console.log("Programme file changed. Reloading.");
         loadProgramme(programmeDataPath, onProgrammeChange);
     });

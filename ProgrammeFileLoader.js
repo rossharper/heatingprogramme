@@ -1,13 +1,7 @@
 var fs          = require('fs'),
     Programme   = require('./Programme').Programme,
+    ProgrammeFile = require('./ProgrammeFile'),
     FileWatcher = require('./FileWatcher');
-
-var DEFAULT_PROGRAMME_FILE = __dirname + "/defaultProgramme.json";
-var PROGRAMME_FILE = "programme.json";
-
-function getProgrammeDataFilePath(programmeDataPath) {
-    return programmeDataPath + "/" + PROGRAMME_FILE;
-}
 
 function readProgrammeFile(programmeFilePath, callback) {
     fs.readFile(programmeFilePath, function (err, data) {
@@ -25,7 +19,7 @@ function loadProgrammeFile(programmeFilePath, callback) {
         if(err) {
             if(err.code === 'ENOENT') {
                 console.log("Programme data file missing: " + programmeFilePath);
-                readProgrammeFile(DEFAULT_PROGRAMME_FILE, function(err, defaultProgrammeData) {
+                readProgrammeFile(ProgrammeFile.getDefaultProgrammeDataFilePath(), function(err, defaultProgrammeData) {
                     if(err) throw err;
                     callback(defaultProgrammeData);
                 });
@@ -42,9 +36,8 @@ function loadProgrammeFile(programmeFilePath, callback) {
 
 module.exports = {
     loadProgramme : function(programmeDataPath, callback) {
-        loadProgrammeFile(getProgrammeDataFilePath(programmeDataPath), function(programmeData) {
+        loadProgrammeFile(ProgrammeFile.getProgrammeDataFilePath(programmeDataPath), function(programmeData) {
             callback(new Programme(programmeData));
         });
-    },
-    getProgrammeDataFilePath : getProgrammeDataFilePath
+    }
 }

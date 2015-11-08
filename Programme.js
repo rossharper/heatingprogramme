@@ -4,6 +4,10 @@ function Programme(programme) {
 
     var self = this;
 
+    this.getProgrammeData = function() {
+        return programme;
+    }
+
     this.getCurrentTargetTemperature = function(date) {
         if(!self.isHeatingEnabled()) {
             return programme.frostProtectTemp;
@@ -13,6 +17,10 @@ function Programme(programme) {
 
     this.isHeatingEnabled = function() {
         return programme.heatingOn;
+    }
+
+    this.setHeatingEnabled = function(heatingEnabled) {
+        programme.heatinOn = heatingEnabled;
     }
 
     this.isInComfortMode = function(date) {
