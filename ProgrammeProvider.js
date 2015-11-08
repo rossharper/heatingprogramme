@@ -3,7 +3,7 @@ var fs          = require('fs'),
     FileWatcher = require('./FileWatcher');
 
 var DEFAULT_PROGRAMME_FILE = "defaultProgramme.json";
-var PROGRAMME_FILE = "programme.json";
+var PROGRAMME_FILE = __dirname + "/programme.json";
 
 function ProgrammeProvider(programmeDataPath) {
 
