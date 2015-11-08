@@ -1,22 +1,38 @@
 var DateUtil = require('dateutil');
 
 function Programme(programme) {
+
+    var self = this;
+
     this.getCurrentTargetTemperature = function(date) {
-        if(!programme.heatingOn) {
+        if(!self.isHeatingEnabled()) {
             return programme.frostProtectTemp;
         }
         return getOverriddenTemperature(date) || getProgrammeTemperature(date);
     }
 
+    this.isHeatingEnabled = function() {
+        return programme.heatingOn;
+    }
+
+    this.isInComfortMode = function(date) {
+        if(self.inOverridePeriod(date)) {
+            return programme.override.comfortState;
+        }
+        else {
+            return inAnyComfortPeriodForDate(date);
+        }
+    }
+
+    this.inOverridePeriod = function(date) {
+        return programme.override && programme.override.until && beforeOverrideEnd(date, programme.override.until);
+    }
+
     function getOverriddenTemperature(date) {
-        if(inOverridePeriod(date)) {
+        if(self.inOverridePeriod(date)) {
             return getTemperatureForComfortState(programme.override.comfortState);
         }
         return NaN;
-    }
-
-    function inOverridePeriod(date) {
-        return programme.override && programme.override.until && beforeOverrideEnd(date, programme.override.until);
     }
 
     function beforeOverrideEnd(date, overrideEndTimeMs) {
