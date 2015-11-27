@@ -20,7 +20,7 @@ function Programme(programme) {
     }
 
     this.setHeatingEnabled = function(heatingEnabled) {
-        programme.heatinOn = heatingEnabled;
+        programme.heatingOn = heatingEnabled;
     }
 
     this.isInComfortMode = function(date) {
