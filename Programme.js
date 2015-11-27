@@ -23,6 +23,10 @@ function Programme(programme) {
         programme.heatingOn = heatingEnabled;
     }
 
+    this.clearOverride = function() {
+        programme.override = undefined;
+    }
+
     this.isInComfortMode = function(date) {
         if(self.isInOverridePeriod(date)) {
             return programme.override.comfortState;
