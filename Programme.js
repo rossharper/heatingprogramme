@@ -23,6 +23,18 @@ function Programme(programme) {
         programme.heatingOn = heatingEnabled;
     }
 
+    this.setComfortOverride = function(untilDate) {
+        programme.override = {};
+        programme.override.comfortState = true;
+        programme.override.until = untilDate.getTime();
+    }
+
+    this.setSetbackOverride = function(untilDate) {
+        programme.override = {};
+        programme.override.comfortState = false;
+        programme.override.until = untilDate.getTime();
+    }
+
     this.clearOverride = function() {
         programme.override = undefined;
     }
