@@ -19,17 +19,23 @@ function Programme(programme) {
         return programme.heatingOn;
     }
 
-    this.setHeatingEnabled = function(heatingEnabled) {
-        programme.heatingOn = heatingEnabled;
+    this.setHeatingOn = function() {
+        programme.heatingOn = true;
+    }
+
+    this.setHeatingOff = function() {
+        programme.heatingOn = false;
     }
 
     this.setComfortOverride = function(untilDate) {
+        self.setHeatingOn();
         programme.override = {};
         programme.override.comfortState = true;
         programme.override.until = untilDate.getTime();
     }
 
     this.setSetbackOverride = function(untilDate) {
+        self.setHeatingOn();
         programme.override = {};
         programme.override.comfortState = false;
         programme.override.until = untilDate.getTime();
