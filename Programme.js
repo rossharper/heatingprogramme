@@ -8,6 +8,10 @@ function Programme(programme) {
         return programme;
     }
 
+    this.getComfortPeriodsForDate = function(date) {
+        return programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods;
+    }
+
     this.getCurrentTargetTemperature = function(date) {
         if(!self.isHeatingEnabled()) {
             return programme.frostProtectTemp;
