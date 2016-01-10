@@ -12,7 +12,7 @@
                 },
                 {
                     "startTime" : "17:30",
-                    "endTime" : "23:30"
+                    "endTime" : "23:00"
                 }
             ]
         },
@@ -20,11 +20,11 @@
             "comfortPeriods" : [
                 {
                     "startTime" : "06:30",
-                    "endTime" : "08:30"
+                    "endTime" : "08:00"
                 },
                 {
                     "startTime" : "17:30",
-                    "endTime" : "23:30"
+                    "endTime" : "23:00"
                 }
             ]
         },
@@ -32,11 +32,11 @@
             "comfortPeriods" : [
                 {
                     "startTime" : "06:30",
-                    "endTime" : "08:30"
+                    "endTime" : "08:00"
                 },
                 {
                     "startTime" : "17:30",
-                    "endTime" : "23:30"
+                    "endTime" : "23:00"
                 }
             ]
         },
@@ -44,11 +44,11 @@
             "comfortPeriods" : [
                 {
                     "startTime" : "06:30",
-                    "endTime" : "08:30"
+                    "endTime" : "08:00"
                 },
                 {
                     "startTime" : "17:30",
-                    "endTime" : "23:30"
+                    "endTime" : "23:00"
                 }
             ]
         },
@@ -56,11 +56,11 @@
             "comfortPeriods" : [
                 {
                     "startTime" : "06:30",
-                    "endTime" : "08:30"
+                    "endTime" : "08:00"
                 },
                 {
                     "startTime" : "17:30",
-                    "endTime" : "23:30"
+                    "endTime" : "23:00"
                 }
             ]
         },
@@ -68,7 +68,7 @@
             "comfortPeriods" : [
                 {
                     "startTime" : "06:30",
-                    "endTime" : "08:30"
+                    "endTime" : "08:00"
                 },
                 {
                     "startTime" : "17:30",
