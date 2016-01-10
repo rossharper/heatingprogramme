@@ -1,4 +1,5 @@
 var FileWatcher = require('./FileWatcher');
+var ProgrammeFileLoader = require('./ProgrammeFileLoader');
 var ProgrammeFile = require('./ProgrammeFile');
 
 function loadProgramme(programmeDataPath, callback) {
