@@ -8,6 +8,14 @@ function Programme(programme) {
         return programme;
     }
 
+    this.getComfortSetPoint = function() {
+        return programme.comfortTemp
+    }
+
+    this.setComfortSetPoint = function(setPoint) {
+        programme.comfortTemp = setPoint
+    }
+
     this.getComfortPeriodsForDate = function(date) {
         return programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods;
     }

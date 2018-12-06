@@ -7,6 +7,9 @@
     "type": "git",
     "url": "https://rossharper@github.com/rossharper/heatingprogramme.git"
   },
+  "scripts": {
+    "test": "mocha"
+  },
   "author": "Ross Harper <ross@rossharper.net>",
   "dependencies": {
     "chokidar": "1.6.0",
@@ -14,6 +17,7 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "chai": "^3.4.1"
+    "chai": "^3.4.1",
+    "mocha": "^5.2.0"
   }
 }

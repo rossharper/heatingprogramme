@@ -4,7 +4,7 @@ var Programme = require('./../Programme');
 var ProgrammeFileLoader = require('./../ProgrammeFileLoader');
 
 describe('Programme', function() {
-  it('getComfortPeriodsForDate should return comfort periods for Saturday', function() {
+  it('getComfortPeriodsForDate should return comfort periods for Saturday', function(done) {
     ProgrammeFileLoader.loadProgramme('.', function(programme) {
         var date = new Date('January 9, 2016 00:00:00'); // a saturday
 
@@ -20,6 +20,7 @@ describe('Programme', function() {
         ];
 
         expect(programme.getComfortPeriodsForDate(date)).to.deep.have.same.members(expected);
+        done();
     });
   });
 });
