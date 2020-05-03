@@ -11,7 +11,7 @@ describe('Programme', function() {
       });
     });
 
-    it('should update comfort setpoint correctly', function() {
+    it('should update comfort setpoint correctly', function(done) {
       ProgrammeFileLoader.loadProgramme('.', function(programme) {
         programme.setComfortSetPoint(10);
         expect(programme.getComfortSetPoint()).to.equal(10);
