@@ -1,6 +1,6 @@
 {
   "name": "heatingprogramme",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Module for loading and handling a heating programme/schedule.",
   "main": "index.js",
   "repository": {
@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "nyc mocha",
-    "cov": "nyc --reporter=html --reporter=text mocha"
+    "cov": "nyc --reporter=html --reporter=text mocha",
+    "lint": "eslint ."
   },
   "author": "Ross Harper <ross@rossharper.net>",
   "dependencies": {
@@ -19,7 +20,18 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "chai": "^3.4.1",
+    "eslint": "^7.20.0",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-mocha": "^6.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
     "mocha": "^7.1.2",
     "nyc": "^15.1.0"
+  },
+  "eslintConfig": {
+    "rules": {
+      "no-console": "off"
+    }
   }
 }

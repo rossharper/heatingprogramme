@@ -1,122 +1,122 @@
-var DateUtil = require('dateutil');
+'use strict'
 
-function Programme(programme) {
+const DateUtil = require('dateutil')
 
-    var self = this;
+function Programme (programme) {
+    const self = this
 
-    this.getProgrammeData = function() {
-        return programme;
+    this.getProgrammeData = function () {
+        return programme
     }
 
-    this.getComfortSetPoint = function() {
+    this.getComfortSetPoint = function () {
         return programme.comfortTemp
     }
 
-    this.setComfortSetPoint = function(setPoint) {
+    this.setComfortSetPoint = function (setPoint) {
         programme.comfortTemp = setPoint
     }
 
-    this.getComfortPeriodsForDate = function(date) {
-        return programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods;
+    this.getComfortPeriodsForDate = function (date) {
+        return programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods
     }
 
-    this.getCurrentTargetTemperature = function(date) {
-        if(!self.isHeatingEnabled()) {
-            return programme.frostProtectTemp;
+    this.getCurrentTargetTemperature = function (date) {
+        if (!self.isHeatingEnabled()) {
+            return programme.frostProtectTemp
         }
-        return getOverriddenTemperature(date) || getProgrammeTemperature(date);
+        return getOverriddenTemperature(date) || getProgrammeTemperature(date)
     }
 
-    this.isHeatingEnabled = function() {
-        return programme.heatingOn;
+    this.isHeatingEnabled = function () {
+        return programme.heatingOn
     }
 
-    this.setHeatingOn = function() {
-        programme.heatingOn = true;
+    this.setHeatingOn = function () {
+        programme.heatingOn = true
     }
 
-    this.setHeatingOff = function() {
-        programme.heatingOn = false;
+    this.setHeatingOff = function () {
+        programme.heatingOn = false
     }
 
-    this.setComfortOverride = function(untilDate) {
-        self.setHeatingOn();
-        programme.override = {};
-        programme.override.comfortState = true;
-        programme.override.until = untilDate.getTime();
+    this.setComfortOverride = function (untilDate) {
+        self.setHeatingOn()
+        programme.override = {}
+        programme.override.comfortState = true
+        programme.override.until = untilDate.getTime()
     }
 
-    this.setSetbackOverride = function(untilDate) {
-        self.setHeatingOn();
-        programme.override = {};
-        programme.override.comfortState = false;
-        programme.override.until = untilDate.getTime();
+    this.setSetbackOverride = function (untilDate) {
+        self.setHeatingOn()
+        programme.override = {}
+        programme.override.comfortState = false
+        programme.override.until = untilDate.getTime()
     }
 
-    this.clearOverride = function() {
-        programme.override = undefined;
+    this.clearOverride = function () {
+        programme.override = undefined
     }
 
-    this.isInComfortMode = function(date) {
-        if(self.isInOverridePeriod(date)) {
-            return programme.override.comfortState;
+    this.isInComfortMode = function (date) {
+        if (self.isInOverridePeriod(date)) {
+            return programme.override.comfortState
+        } else {
+            return isInAnyComfortPeriodForDate(date)
         }
-        else {
-            return isInAnyComfortPeriodForDate(date);
-        }
     }
 
-    this.isInOverridePeriod = function(date) {
+    this.isInOverridePeriod = function (date) {
         return (
-            programme.override !== undefined
-            && programme.override.until !== undefined
-            && beforeOverrideEnd(date, programme.override.until));
+            programme.override !== undefined &&
+            programme.override.until !== undefined &&
+            beforeOverrideEnd(date, programme.override.until))
     }
 
-    function getOverriddenTemperature(date) {
-        if(self.isInOverridePeriod(date)) {
-            return getTemperatureForComfortState(programme.override.comfortState);
+    function getOverriddenTemperature (date) {
+        if (self.isInOverridePeriod(date)) {
+            return getTemperatureForComfortState(programme.override.comfortState)
         }
-        return NaN;
+        return NaN
     }
 
-    function beforeOverrideEnd(date, overrideEndTimeMs) {
-        return date.getTime() < overrideEndTimeMs;
+    function beforeOverrideEnd (date, overrideEndTimeMs) {
+        return date.getTime() < overrideEndTimeMs
     }
 
-    function getProgrammeTemperature(date) {
-        return getTemperatureForComfortState(isInAnyComfortPeriodForDate(date));
+    function getProgrammeTemperature (date) {
+        return getTemperatureForComfortState(isInAnyComfortPeriodForDate(date))
     }
 
-    function getTemperatureForComfortState(comfortState) {
-        return comfortState ? programme.comfortTemp : programme.setbackTemp;
+    function getTemperatureForComfortState (comfortState) {
+        return comfortState ? programme.comfortTemp : programme.setbackTemp
     }
 
-    function laterThanComfortPeriodStart(date, period) {
-        var start = DateUtil.getDateFromTimeStr(date, period.startTime);
-        return DateUtil.isFirstDateBeforeSecondDate(start, date);
+    function laterThanComfortPeriodStart (date, period) {
+        const start = DateUtil.getDateFromTimeStr(date, period.startTime)
+        return DateUtil.isFirstDateBeforeSecondDate(start, date)
     }
 
-    function earlierThanComfortPeriodEnd(date, period) {
-        var end = DateUtil.getDateFromTimeStr(date, period.endTime);
-        return DateUtil.isFirstDateBeforeSecondDate(date, end);
+    function earlierThanComfortPeriodEnd (date, period) {
+        const end = DateUtil.getDateFromTimeStr(date, period.endTime)
+        return DateUtil.isFirstDateBeforeSecondDate(date, end)
     }
 
-    function isInComfortPeriod(date, comfortPeriod) {
-        return laterThanComfortPeriodStart(date, comfortPeriod) && earlierThanComfortPeriodEnd(date, comfortPeriod);
+    function isInComfortPeriod (date, comfortPeriod) {
+        return laterThanComfortPeriodStart(date, comfortPeriod) && earlierThanComfortPeriodEnd(date, comfortPeriod)
     }
 
-    function isInAnyComfortPeriodForDate(date) {
-        var periodsForToday = programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods;
-        for(var i = 0; i < periodsForToday.length; ++i) {
-            if(isInComfortPeriod(date, periodsForToday[i])) {
-                return true;
+    function isInAnyComfortPeriodForDate (date) {
+        const periodsForToday = programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods
+        for (let i = 0; i < periodsForToday.length; ++i) {
+            if (isInComfortPeriod(date, periodsForToday[i])) {
+                return true
             }
         }
-        return false;
+        return false
     }
 }
 
 module.exports = {
-    Programme : Programme
+    Programme: Programme
 }
