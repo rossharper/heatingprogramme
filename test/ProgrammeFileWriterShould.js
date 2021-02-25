@@ -18,19 +18,15 @@ describe('ProgrammeFileWriter should', function() {
     beforeEach(() => {
         try {
             deleteFile();
-        } catch (e) {
-            if (e.code !== 'ENOENT') {
-                assert.fail('error cleaning up test file');
-            }
         }
+        catch {}
     });
 
     afterEach(() => {
         try {
             deleteFile();
-        } catch (e) {
-            assert.fail('error cleaning up test file');
         }
+        catch {}
     });
 
     function deleteFile() {
@@ -41,12 +37,22 @@ describe('ProgrammeFileWriter should', function() {
         ProgrammeFileLoader.loadProgramme(PATH, function(programme) {
             programme.setComfortSetPoint(30);
             programme.setHeatingOff();
-            ProgrammeFileWriter.writeProgramme(PATH, programme, function() {
+            ProgrammeFileWriter.writeProgramme(PATH, programme, function(err) {
                 ProgrammeFileLoader.loadProgramme(PATH, function(writtenProgramme) {
+                    expect(err).is.undefined;
                     expect(programme.getComfortSetPoint()).to.equal(30);
                     expect(programme.isHeatingEnabled()).to.equal(false);
                     done();
                 });
+            });
+        });
+    });
+
+    it('throw error writing file when path does not exist', function(done) {
+        ProgrammeFileLoader.loadProgramme(PATH, function(programme) {
+            ProgrammeFileWriter.writeProgramme('doesnotexist', programme, function(err) {
+                expect(err).to.not.be.undefined;
+                done();
             });
         });
     });
