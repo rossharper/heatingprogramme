@@ -1,0 +1,92 @@
+{
+    "frostProtectTemp" : 8,
+    "setbackTemp" : 15,
+    "comfortTemp" : 21,
+    "heatingOn" : false,
+    "schedule" : {
+        "Sunday" : {
+            "comfortPeriods" : [
+                {
+                    "startTime" : "06:30",
+                    "endTime" : "10:30"
+                },
+                {
+                    "startTime" : "17:30",
+                    "endTime" : "23:00"
+                }
+            ]
+        },
+        "Monday" : {
+            "comfortPeriods" : [
+                {
+                    "startTime" : "06:30",
+                    "endTime" : "08:00"
+                },
+                {
+                    "startTime" : "17:30",
+                    "endTime" : "23:00"
+                }
+            ]
+        },
+        "Tuesday" : {
+            "comfortPeriods" : [
+                {
+                    "startTime" : "06:30",
+                    "endTime" : "08:00"
+                },
+                {
+                    "startTime" : "17:30",
+                    "endTime" : "23:00"
+                }
+            ]
+        },
+        "Wednesday" : {
+            "comfortPeriods" : [
+                {
+                    "startTime" : "06:30",
+                    "endTime" : "08:00"
+                },
+                {
+                    "startTime" : "17:30",
+                    "endTime" : "23:00"
+                }
+            ]
+        },
+        "Thursday" : {
+            "comfortPeriods" : [
+                {
+                    "startTime" : "06:30",
+                    "endTime" : "08:00"
+                },
+                {
+                    "startTime" : "17:30",
+                    "endTime" : "23:00"
+                }
+            ]
+        },
+        "Friday" : {
+            "comfortPeriods" : [
+                {
+                    "startTime" : "06:30",
+                    "endTime" : "08:00"
+                },
+                {
+                    "startTime" : "17:30",
+                    "endTime" : "23:30"
+                }
+            ]
+        },
+        "Saturday" : {
+            "comfortPeriods" : [
+                {
+                    "startTime" : "06:30",
+                    "endTime" : "10:30"
+                },
+                {
+                    "startTime" : "17:30",
+                    "endTime" : "23:30"
+                }
+            ]
+        }
+    }
+}
