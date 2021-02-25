@@ -4,7 +4,7 @@ const chai = require('chai')
 const expect = chai.expect // we are using the "expect" style of Chai
 const ProgrammeFileLoader = require('./../ProgrammeFileLoader')
 
-describe('ProgrammeFileLoader should', function () {
+describe('ProgrammeFileLoader', function () {
     it('should load default programme when no programme data available', function (done) {
         ProgrammeFileLoader.loadProgramme('test/fixtures/loader_noprogramme', function (programme) {
             expect(programme.getComfortSetPoint()).to.equal(20)

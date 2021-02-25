@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "nyc mocha",
-    "cov": "nyc --reporter=html --reporter=text mocha",
+    "cov": "nyc --all --reporter=html --reporter=text mocha",
     "lint": "eslint ."
   },
   "author": "Ross Harper <ross@rossharper.net>",

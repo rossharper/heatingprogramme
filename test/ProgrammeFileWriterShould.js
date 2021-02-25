@@ -11,7 +11,7 @@ const PATH = '.'
 const FILE_NAME = 'programme.json'
 const FILE_PATH = path.join(PATH, '/', FILE_NAME)
 
-describe('ProgrammeFileWriter should', function () {
+describe('ProgrammeFileWriter', function () {
     beforeEach(() => {
         try {
             deleteFile()
@@ -28,7 +28,7 @@ describe('ProgrammeFileWriter should', function () {
         fs.unlinkSync(FILE_PATH)
     }
 
-    it('successfully write programme file', function (done) {
+    it('should successfully write programme file', function (done) {
         ProgrammeFileLoader.loadProgramme(PATH, function (programme) {
             programme.setComfortSetPoint(30)
             programme.setHeatingOff()
@@ -43,7 +43,7 @@ describe('ProgrammeFileWriter should', function () {
         })
     })
 
-    it('throw error writing file when path does not exist', function (done) {
+    it('should throw error writing file when path does not exist', function (done) {
         ProgrammeFileLoader.loadProgramme(PATH, function (programme) {
             ProgrammeFileWriter.writeProgramme('doesnotexist', programme, function (err) {
                 expect(err).to.not.be.undefined

@@ -5,7 +5,7 @@
 // const Programme = require('./../Programme')
 // const ProgrammeFileLoader = require('./../ProgrammeFileLoader')
 
-describe.skip('ProgrammeFileWatcher should', function () {
+describe.skip('ProgrammeFileWatcher', function () {
     it('should do something', function (done) {
         done()
     })
