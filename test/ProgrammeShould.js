@@ -1,20 +1,10 @@
 'use strict'
 
 const chai = require('chai')
-const Programme = require('../Programme')
+const Programme = require('../Programme').Programme
 const expect = chai.expect // we are using the "expect" style of Chai
-const ProgrammeFileLoader = require('./../ProgrammeFileLoader')
 
 describe('Programme', function () {
-    let programme
-
-    beforeEach(function (done) {
-        ProgrammeFileLoader.loadProgramme('.', function (it) {
-            programme = it
-            done()
-        })
-    })
-
     it('should return programmeData that it was init with', function () {
         const programmeData = {
             frostProtectTemp: 1,
@@ -22,11 +12,29 @@ describe('Programme', function () {
             comfortTemp: 25,
             heatingOn: false
         }
-        programme = new Programme.Programme(programmeData)
+        const programme = new Programme(programmeData)
 
         const returnedProgramme = programme.getProgrammeData()
 
         expect(returnedProgramme).to.deep.equal(programmeData)
+    })
+
+    it('should return default setpoint', function () {
+        const programme = new Programme({
+            comfortTemp: 20
+        })
+
+        expect(programme.getComfortSetPoint()).to.equal(20)
+    })
+
+    it('should allow programme setpoint to change', function () {
+        const programme = new Programme({
+            comfortTemp: 20
+        })
+
+        programme.setComfortSetPoint(30)
+
+        expect(programme.getComfortSetPoint()).to.equal(30)
     })
 
     it('should return comfort periods for Saturday', function (done) {
@@ -42,6 +50,19 @@ describe('Programme', function () {
                 endTime: '23:30'
             }
         ]
+        const programme = new Programme({
+            schedule: {
+                Monday: {},
+                Tuesday: {},
+                Wednesday: {},
+                Thursday: {},
+                Friday: {},
+                Saturday: {
+                    comfortPeriods: expected
+                },
+                Sunday: {}
+            }
+        })
 
         expect(programme.getComfortPeriodsForDate(date)).to.deep.have.same.members(expected)
         done()
