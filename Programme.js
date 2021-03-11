@@ -4,6 +4,7 @@ const DateUtil = require('dateutil')
 
 function Programme (programme) {
     const self = this
+    programme = (programme === undefined) ? {} : programme
 
     this.getProgrammeData = function () {
         return programme
@@ -29,7 +30,7 @@ function Programme (programme) {
     }
 
     this.isHeatingEnabled = function () {
-        return programme.heatingOn
+        return (programme.heatingOn === undefined) ? true : programme.heatingOn;
     }
 
     this.setHeatingOn = function () {

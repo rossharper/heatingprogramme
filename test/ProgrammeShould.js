@@ -53,6 +53,12 @@ describe('Programme', function () {
 
             expect(programme.isHeatingEnabled()).to.equal(true)
         })
+
+        it('should return true as default when not in programme', function () {
+            const programme = new Programme()
+
+            expect(programme.isHeatingEnabled()).to.equal(true)
+        })
     })
 
     it('should return comfort periods for a date in the future', function () {
