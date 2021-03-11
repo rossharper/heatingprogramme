@@ -37,9 +37,17 @@ describe('Programme', function () {
         expect(programme.getComfortSetPoint()).to.equal(30)
     })
 
-    it('should return comfort periods for Saturday', function (done) {
-        const date = new Date('January 9, 2016 00:00:00') // a saturday
+    it('should return comfort periods for a date in the future', function (done) {
+        const date = new Date()
+        date.setTime(new Date().getTime() + 7 * 86400000)
 
+        const day = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date)
+
+        assertReturnsComfortPeriodsForDay(day, date)
+        done()
+    })
+
+    function assertReturnsComfortPeriodsForDay (day, date) {
         const expected = [
             {
                 startTime: '06:30',
@@ -50,21 +58,59 @@ describe('Programme', function () {
                 endTime: '23:30'
             }
         ]
-        const programme = new Programme({
+        const programme = programmeWithComfortPeriodsForDay(day, expected)
+
+        expect(programme.getComfortPeriodsForDate(date)).to.deep.have.same.members(expected)
+    }
+
+    function programmeWithComfortPeriodsForDay (day, comfortPeriodsForDay) {
+        const programmeData = skeletonProgrammeData()
+        programmeData.schedule[day].comfortPeriods = comfortPeriodsForDay
+        return new Programme(programmeData)
+    }
+
+    function skeletonProgrammeData () {
+        return {
             schedule: {
                 Monday: {},
                 Tuesday: {},
                 Wednesday: {},
                 Thursday: {},
                 Friday: {},
-                Saturday: {
-                    comfortPeriods: expected
-                },
+                Saturday: {},
                 Sunday: {}
             }
-        })
+        }
+    }
 
-        expect(programme.getComfortPeriodsForDate(date)).to.deep.have.same.members(expected)
-        done()
+    describe('should return comfort periods for days of week', function () {
+        const tests = [
+            { day: 'Monday', date: new Date('December 7, 2020 00:00:00') },
+            { day: 'Tuesday', date: new Date('July 3, 2018 00:00:00') },
+            { day: 'Wednesday', date: new Date('August 15, 2018 00:00:00') },
+            { day: 'Thursday', date: new Date('September 12, 2019 00:00:00') },
+            { day: 'Friday', date: new Date('November 13, 2020 00:00:00') },
+            { day: 'Saturday', date: new Date('December 12, 2020 00:00:00') },
+            { day: 'Sunday', date: new Date('March 7, 2021 00:00:00') }
+        ]
+
+        tests.forEach(({ day, date }) => {
+            it(`should return comfort periods for ${day}`, function (done) {
+                const expected = [
+                    {
+                        startTime: '06:30',
+                        endTime: '10:30'
+                    },
+                    {
+                        startTime: '17:30',
+                        endTime: '23:30'
+                    }
+                ]
+                const programme = programmeWithComfortPeriodsForDay(day, expected)
+
+                expect(programme.getComfortPeriodsForDate(date)).to.deep.have.same.members(expected)
+                done()
+            })
+        })
     })
 })
