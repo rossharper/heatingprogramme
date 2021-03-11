@@ -89,6 +89,25 @@ describe('Programme', function () {
         })
     })
 
+    describe('current target temperature', function () {
+        it('should return frost protect temperature when heating disabled', function () {
+            const programme = new Programme({
+                frostProtectTemp: 4,
+                heatingOn: false
+            })
+
+            expect(programme.getCurrentTargetTemperature(new Date())).to.equal(4)
+        })
+
+        it('should return default frost protect temperature of 5 when heating disabled and no temp programmed', function () {
+            const programme = new Programme({
+                heatingOn: false
+            })
+
+            expect(programme.getCurrentTargetTemperature(new Date())).to.equal(5)
+        })
+    })
+
     describe('comfort periods', function () {
         it('should return comfort periods for a date in the future', function () {
             const date = new Date()

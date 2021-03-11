@@ -24,7 +24,7 @@ function Programme (programme) {
 
     this.getCurrentTargetTemperature = function (date) {
         if (!self.isHeatingEnabled()) {
-            return programme.frostProtectTemp
+            return programme.frostProtectTemp || 5
         }
         return getOverriddenTemperature(date) || getProgrammeTemperature(date)
     }
