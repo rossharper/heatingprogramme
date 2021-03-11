@@ -24,7 +24,7 @@ describe('Programme', function () {
             const programme = new Programme({
                 comfortTemp: 19
             })
-    
+
             expect(programme.getComfortSetPoint()).to.equal(19)
         })
 
@@ -33,14 +33,14 @@ describe('Programme', function () {
 
             expect(programme.getComfortSetPoint()).to.equal(20)
         })
-    
+
         it('should allow programme setpoint to change', function () {
             const programme = new Programme({
                 comfortTemp: 20
             })
-    
+
             programme.setComfortSetPoint(30)
-    
+
             expect(programme.getComfortSetPoint()).to.equal(30)
         })
     })
@@ -66,6 +66,26 @@ describe('Programme', function () {
             const programme = new Programme()
 
             expect(programme.isHeatingEnabled()).to.equal(true)
+        })
+
+        it('should allow heating to be set on', function () {
+            const programme = new Programme({
+                heatingOn: false
+            })
+
+            programme.setHeatingOn()
+
+            expect(programme.isHeatingEnabled()).to.equal(true)
+        })
+
+        it('should allow heating to be set off', function () {
+            const programme = new Programme({
+                heatingOn: true
+            })
+
+            programme.setHeatingOff()
+
+            expect(programme.isHeatingEnabled()).to.equal(false)
         })
     })
 

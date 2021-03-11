@@ -30,7 +30,7 @@ function Programme (programme) {
     }
 
     this.isHeatingEnabled = function () {
-        return (programme.heatingOn === undefined) ? true : programme.heatingOn;
+        return (programme.heatingOn === undefined) ? true : programme.heatingOn
     }
 
     this.setHeatingOn = function () {
