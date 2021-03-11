@@ -106,6 +106,54 @@ describe('Programme', function () {
 
             expect(programme.getCurrentTargetTemperature(new Date())).to.equal(5)
         })
+
+        it('should return setback temperature if not in a comfort period', function () {
+            const programme = new Programme({
+                setbackTemp: 11,
+                schedule: defaultSchedule()
+            })
+            const date = new Date('12 Dec 1980 00:00:00')
+
+            expect(programme.getCurrentTargetTemperature(date)).to.equal(11)
+        })
+
+        it('should return default setback temperature of 10 if not in a comfort period and not programmed', function () {
+            const programme = new Programme({
+                schedule: defaultSchedule()
+            })
+            const date = new Date('12 Dec 1980 00:00:00')
+
+            expect(programme.getCurrentTargetTemperature(date)).to.equal(10)
+        })
+
+        it.skip('should return comfort temperature if in first comfort period', function () {
+            const programme = new Programme({
+                comfortTemp: 21,
+                schedule: defaultSchedule()
+            })
+            const date = new Date('12 Dec 1980 07:00:00')
+
+            expect(programme.getCurrentTargetTemperature(date)).to.equal(21)
+        })
+
+        it('should return comfort temperature if in second comfort period', function () {
+            const programme = new Programme({
+                comfortTemp: 21,
+                schedule: defaultSchedule()
+            })
+            const date = new Date('12 Dec 1980 18:00:00')
+
+            expect(programme.getCurrentTargetTemperature(date)).to.equal(21)
+        })
+
+        it('should return default comfort temperature of 20 if in a comfort period and not programmed', function () {
+            const programme = new Programme({
+                schedule: defaultSchedule()
+            })
+            const date = new Date('12 Dec 1980 18:00:00')
+
+            expect(programme.getCurrentTargetTemperature(date)).to.equal(20)
+        })
     })
 
     describe('comfort periods', function () {
@@ -137,16 +185,7 @@ describe('Programme', function () {
         })
 
         function assertReturnsComfortPeriodsForDay (day, date) {
-            const expected = [
-                {
-                    startTime: '06:30',
-                    endTime: '10:30'
-                },
-                {
-                    startTime: '17:30',
-                    endTime: '23:30'
-                }
-            ]
+            const expected = defaultComfortPeriods()
             const programme = programmeWithComfortPeriodsForDay(day, expected)
 
             expect(programme.getComfortPeriodsForDate(date)).to.deep.have.same.members(expected)
@@ -172,4 +211,35 @@ describe('Programme', function () {
             }
         }
     })
+
+    function defaultSchedule () {
+        return {
+            Monday: defaultScheduleDay(),
+            Tuesday: defaultScheduleDay(),
+            Wednesday: defaultScheduleDay(),
+            Thursday: defaultScheduleDay(),
+            Friday: defaultScheduleDay(),
+            Saturday: defaultScheduleDay(),
+            Sunday: defaultScheduleDay()
+        }
+    }
+
+    function defaultScheduleDay () {
+        return {
+            comfortPeriods: defaultComfortPeriods()
+        }
+    }
+
+    function defaultComfortPeriods () {
+        return [
+            {
+                startTime: '06:30',
+                endTime: '10:30'
+            },
+            {
+                startTime: '17:30',
+                endTime: '23:30'
+            }
+        ]
+    }
 })

@@ -11,7 +11,7 @@ function Programme (programme) {
     }
 
     this.getComfortSetPoint = function () {
-        return programme.comfortTemp || 20
+        return getComfortTemperature()
     }
 
     this.setComfortSetPoint = function (setPoint) {
@@ -24,7 +24,7 @@ function Programme (programme) {
 
     this.getCurrentTargetTemperature = function (date) {
         if (!self.isHeatingEnabled()) {
-            return programme.frostProtectTemp || 5
+            return getFrostProtectTemp()
         }
         return getOverriddenTemperature(date) || getProgrammeTemperature(date)
     }
@@ -89,8 +89,20 @@ function Programme (programme) {
         return getTemperatureForComfortState(isInAnyComfortPeriodForDate(date))
     }
 
+    function getComfortTemperature () {
+        return programme.comfortTemp || 20
+    }
+
+    function getSetbackTemperature () {
+        return programme.setbackTemp || 10
+    }
+
+    function getFrostProtectTemp () {
+        return programme.frostProtectTemp || 5
+    }
+
     function getTemperatureForComfortState (comfortState) {
-        return comfortState ? programme.comfortTemp : programme.setbackTemp
+        return comfortState ? getComfortTemperature() : getSetbackTemperature()
     }
 
     function laterThanComfortPeriodStart (date, period) {
