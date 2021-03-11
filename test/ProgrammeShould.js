@@ -19,22 +19,30 @@ describe('Programme', function () {
         expect(returnedProgramme).to.deep.equal(programmeData)
     })
 
-    it('should return default setpoint', function () {
-        const programme = new Programme({
-            comfortTemp: 20
+    describe('comfort setpoint', function () {
+        it('should return programmed setpoint', function () {
+            const programme = new Programme({
+                comfortTemp: 19
+            })
+    
+            expect(programme.getComfortSetPoint()).to.equal(19)
         })
 
-        expect(programme.getComfortSetPoint()).to.equal(20)
-    })
+        it('should return default setpoint of 20 when no programme', function () {
+            const programme = new Programme()
 
-    it('should allow programme setpoint to change', function () {
-        const programme = new Programme({
-            comfortTemp: 20
+            expect(programme.getComfortSetPoint()).to.equal(20)
         })
-
-        programme.setComfortSetPoint(30)
-
-        expect(programme.getComfortSetPoint()).to.equal(30)
+    
+        it('should allow programme setpoint to change', function () {
+            const programme = new Programme({
+                comfortTemp: 20
+            })
+    
+            programme.setComfortSetPoint(30)
+    
+            expect(programme.getComfortSetPoint()).to.equal(30)
+        })
     })
 
     describe('isHeatingEnabled()', function () {

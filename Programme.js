@@ -11,7 +11,7 @@ function Programme (programme) {
     }
 
     this.getComfortSetPoint = function () {
-        return programme.comfortTemp
+        return programme.comfortTemp || 20
     }
 
     this.setComfortSetPoint = function (setPoint) {
