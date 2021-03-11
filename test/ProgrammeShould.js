@@ -37,6 +37,24 @@ describe('Programme', function () {
         expect(programme.getComfortSetPoint()).to.equal(30)
     })
 
+    describe('isHeatingEnabled()', function () {
+        it('should return false when disabled in programme', function () {
+            const programme = new Programme({
+                heatingOn: false
+            })
+
+            expect(programme.isHeatingEnabled()).to.equal(false)
+        })
+
+        it('should return true when enabled in programme', function () {
+            const programme = new Programme({
+                heatingOn: true
+            })
+
+            expect(programme.isHeatingEnabled()).to.equal(true)
+        })
+    })
+
     it('should return comfort periods for a date in the future', function () {
         const date = new Date()
         date.setTime(new Date().getTime() + 7 * 86400000)
