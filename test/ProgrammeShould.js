@@ -126,7 +126,7 @@ describe('Programme', function () {
             expect(programme.getCurrentTargetTemperature(date)).to.equal(10)
         })
 
-        it.skip('should return comfort temperature if in first comfort period', function () {
+        it('should return comfort temperature if in first comfort period', function () {
             const programme = new Programme({
                 comfortTemp: 21,
                 schedule: defaultSchedule()
@@ -154,6 +154,8 @@ describe('Programme', function () {
 
             expect(programme.getCurrentTargetTemperature(date)).to.equal(20)
         })
+
+        it.skip('should get correct temps when in override periods', function () {})
     })
 
     describe('comfort periods', function () {
