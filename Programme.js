@@ -106,10 +106,6 @@ function Programme (programme) {
         return comfortState ? getComfortTemperature() : getSetbackTemperature()
     }
 
-    function hasOverrideComfortState () {
-        return (programme.override !== undefined || programme.override.comfortState !== undefined)
-    }
-
     function laterThanComfortPeriodStart (date, period) {
         const start = DateUtil.getDateFromTimeStr(date, period.startTime)
         return DateUtil.isFirstDateBeforeSecondDate(start, date)
