@@ -156,6 +156,26 @@ describe('Programme', function () {
         })
     })
 
+    describe('comfort mode', function () {
+        const tests = [
+            { when: 'before comfort periods', date: new Date('December 7, 2020 00:00:00'), expectedComfortMode: false },
+            { when: 'in first comfort period', date: new Date('December 7, 2020 07:00:00'), expectedComfortMode: true },
+            { when: 'in between comfort periods', date: new Date('December 7, 2020 10:30:01'), expectedComfortMode: false },
+            { when: 'in second comfort period', date: new Date('December 7, 2020 17:30:01'), expectedComfortMode: true },
+            { when: 'after final comfort period', date: new Date('December 7, 2020 23:59:00'), expectedComfortMode: false }
+        ]
+
+        tests.forEach(({ when, date, expectedComfortMode }) => {
+            it(`should ${expectedComfortMode ? '' : 'not'} be in comfort mode when ${when}`, function () {
+                const programme = new Programme({
+                    schedule: defaultSchedule()
+                })
+
+                expect(programme.isInComfortMode(date)).to.equal(expectedComfortMode)
+            })
+        })
+    })
+
     describe('overrides', function () {
         it('should return programmed comfort temperature outside comfort period and override is active', function () {
             const now = new Date('12 Dec 1980 23:45:00')
@@ -224,7 +244,7 @@ describe('Programme', function () {
             expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
         })
 
-        it('should ignore override if until is missing', function() {
+        it('should ignore override if until is missing', function () {
             const now = new Date('12 Dec 1980 22:45:00')
             const programme = new Programme({
                 comfortTemp: 21,
