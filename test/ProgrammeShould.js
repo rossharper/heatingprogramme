@@ -169,6 +169,7 @@ describe('Programme', function () {
                 schedule: defaultSchedule()
             })
 
+            expect(programme.isInOverridePeriod(now)).to.equal(true)
             expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
         })
 
@@ -185,6 +186,7 @@ describe('Programme', function () {
                 schedule: defaultSchedule()
             })
 
+            expect(programme.isInOverridePeriod(now)).to.equal(true)
             expect(programme.getCurrentTargetTemperature(now)).to.equal(14)
         })
 
@@ -201,9 +203,9 @@ describe('Programme', function () {
                 schedule: defaultSchedule()
             })
 
+            expect(programme.isInOverridePeriod(now)).to.equal(false)
             expect(programme.getCurrentTargetTemperature(now)).to.equal(14)
         })
-
 
         it('should return programmed comfort temperature inside comfort period and override has elapsed', function () {
             const now = new Date('12 Dec 1980 22:45:00')
@@ -218,6 +220,7 @@ describe('Programme', function () {
                 schedule: defaultSchedule()
             })
 
+            expect(programme.isInOverridePeriod(now)).to.equal(false)
             expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
         })
 
@@ -232,10 +235,11 @@ describe('Programme', function () {
                 schedule: defaultSchedule()
             })
 
+            expect(programme.isInOverridePeriod(now)).to.equal(false)
             expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
         })
 
-        it('should ignore override if comfortState is missing', function() {
+        it('should ignore override if comfortState is missing', function () {
             const now = new Date('12 Dec 1980 22:45:00')
             const midnight = new Date('13 Dec 1980 00:00:00')
             const programme = new Programme({
@@ -247,6 +251,7 @@ describe('Programme', function () {
                 schedule: defaultSchedule()
             })
 
+            expect(programme.isInOverridePeriod(now)).to.equal(false)
             expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
         })
     })
