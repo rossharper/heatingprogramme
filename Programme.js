@@ -71,6 +71,7 @@ function Programme (programme) {
         return (
             programme.override !== undefined &&
             programme.override.until !== undefined &&
+            programme.override.comfortState !== undefined &&
             beforeOverrideEnd(date, programme.override.until))
     }
 
@@ -103,6 +104,10 @@ function Programme (programme) {
 
     function getTemperatureForComfortState (comfortState) {
         return comfortState ? getComfortTemperature() : getSetbackTemperature()
+    }
+
+    function hasOverrideComfortState () {
+        return (programme.override !== undefined || programme.override.comfortState !== undefined)
     }
 
     function laterThanComfortPeriodStart (date, period) {

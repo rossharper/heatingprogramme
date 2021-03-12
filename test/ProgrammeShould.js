@@ -154,8 +154,101 @@ describe('Programme', function () {
 
             expect(programme.getCurrentTargetTemperature(date)).to.equal(20)
         })
+    })
 
-        it.skip('should get correct temps when in override periods', function () {})
+    describe('overrides', function () {
+        it('should return programmed comfort temperature outside comfort period and override is active', function () {
+            const now = new Date('12 Dec 1980 23:45:00')
+            const midnight = new Date('13 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                override: {
+                    until: midnight,
+                    comfortState: true
+                },
+                schedule: defaultSchedule()
+            })
+
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
+        })
+
+        it('should return programmed setback temperature inside comfort period and override is active', function () {
+            const now = new Date('12 Dec 1980 22:45:00')
+            const midnight = new Date('13 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                setbackTemp: 14,
+                override: {
+                    until: midnight,
+                    comfortState: false
+                },
+                schedule: defaultSchedule()
+            })
+
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(14)
+        })
+
+        it('should return programmed setback temperature outside comfort period and override has elapsed', function () {
+            const now = new Date('12 Dec 1980 23:45:00')
+            const midnight = new Date('12 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                setbackTemp: 14,
+                override: {
+                    until: midnight,
+                    comfortState: true
+                },
+                schedule: defaultSchedule()
+            })
+
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(14)
+        })
+
+
+        it('should return programmed comfort temperature inside comfort period and override has elapsed', function () {
+            const now = new Date('12 Dec 1980 22:45:00')
+            const midnight = new Date('12 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                setbackTemp: 14,
+                override: {
+                    until: midnight,
+                    comfortState: false
+                },
+                schedule: defaultSchedule()
+            })
+
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
+        })
+
+        it('should ignore override if until is missing', function() {
+            const now = new Date('12 Dec 1980 22:45:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                setbackTemp: 14,
+                override: {
+                    comfortState: false
+                },
+                schedule: defaultSchedule()
+            })
+
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
+        })
+
+        it('should ignore override if comfortState is missing', function() {
+            const now = new Date('12 Dec 1980 22:45:00')
+            const midnight = new Date('13 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                setbackTemp: 14,
+                override: {
+                    until: midnight
+                },
+                schedule: defaultSchedule()
+            })
+
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
+        })
     })
 
     describe('comfort periods', function () {
