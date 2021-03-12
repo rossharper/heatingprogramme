@@ -297,6 +297,58 @@ describe('Programme', function () {
             expect(programme.isInComfortMode(now)).to.equal(false)
             expect(programme.getCurrentTargetTemperature(now)).to.equal(14)
         })
+
+        it('should allow comfort override to be set', function () {
+            const now = new Date('12 Dec 1980 23:45:00')
+            const midnight = new Date('13 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                setbackTemp: 14,
+                schedule: defaultSchedule()
+            })
+
+            programme.setComfortOverride(midnight)
+
+            expect(programme.isInOverridePeriod(now)).to.equal(true)
+            expect(programme.isInComfortMode(now)).to.equal(true)
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
+        })
+
+        it('should allow setback override to be set', function () {
+            const now = new Date('12 Dec 1980 22:45:00')
+            const midnight = new Date('13 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                setbackTemp: 14,
+                schedule: defaultSchedule()
+            })
+
+            programme.setSetbackOverride(midnight)
+
+            expect(programme.isInOverridePeriod(now)).to.equal(true)
+            expect(programme.isInComfortMode(now)).to.equal(false)
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(14)
+        })
+
+        it('should allow override to be cleared', function () {
+            const now = new Date('12 Dec 1980 23:45:00')
+            const midnight = new Date('13 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                setbackTemp: 14,
+                override: {
+                    comfortState: true,
+                    until: midnight
+                },
+                schedule: defaultSchedule()
+            })
+
+            programme.clearOverride()
+
+            expect(programme.isInOverridePeriod(now)).to.equal(false)
+            expect(programme.isInComfortMode(now)).to.equal(false)
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(14)
+        })
     })
 
     describe('comfort periods', function () {
