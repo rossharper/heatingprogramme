@@ -1,6 +1,6 @@
 {
   "name": "heatingprogramme",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "description": "Module for loading and handling a heating programme/schedule.",
   "main": "index.js",
   "repository": {
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "nyc mocha",
-    "cov": "nyc --reporter=html --reporter=text mocha",
+    "cov": "nyc --all --reporter=html --reporter=text mocha",
     "lint": "eslint ."
   },
   "author": "Ross Harper <ross@rossharper.net>",
