@@ -41,6 +41,17 @@ function Programme (programme) {
         programme.heatingOn = false
     }
 
+    this.setOverrideTemperature = function (overrideTemperature, now) {
+        self.setHeatingOn()
+        if (programme.override === undefined) {
+            programme.override = {
+                comfortState: isInAnyComfortPeriodForDate(now),
+                until: nextComfortPeriodBoundary(now)
+            }
+        }
+        programme.override.overrideTemp = overrideTemperature
+    }
+
     this.setComfortOverride = function (untilDate) {
         self.setHeatingOn()
         programme.override = {}
@@ -116,6 +127,11 @@ function Programme (programme) {
         return DateUtil.isFirstDateBeforeSecondDate(start, date)
     }
 
+    function earlierThanComfortPeriodStart (date, period) {
+        const start = DateUtil.getDateFromTimeStr(date, period.startTime)
+        return DateUtil.isFirstDateBeforeSecondDate(date, start)
+    }
+
     function earlierThanComfortPeriodEnd (date, period) {
         const end = DateUtil.getDateFromTimeStr(date, period.endTime)
         return DateUtil.isFirstDateBeforeSecondDate(date, end)
@@ -130,13 +146,33 @@ function Programme (programme) {
     }
 
     function comfortPeriodForDate (date) {
-        const periodsForToday = programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods
+        const periodsForToday = comfortPeriodsForToday(date)
         for (const comfortPeriod of periodsForToday) {
             if (isInComfortPeriod(date, comfortPeriod)) {
                 return comfortPeriod
             }
         }
         return undefined
+    }
+
+    function comfortPeriodsForToday (date) {
+        return programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods
+    }
+
+    function nextComfortPeriodBoundary (date) {
+        const periodsForToday = comfortPeriodsForToday(date)
+        let boundary = new Date(date.getTime())
+        boundary.setHours(24, 0, 0, 0)
+
+        periodsForToday.slice().reverse().forEach((comfortPeriod) => {
+            if (earlierThanComfortPeriodStart(date, comfortPeriod)) {
+                boundary = DateUtil.getDateFromTimeStr(date, comfortPeriod.startTime)
+            } else if (earlierThanComfortPeriodEnd(date, comfortPeriod)) {
+                boundary = DateUtil.getDateFromTimeStr(date, comfortPeriod.endTime)
+            }
+        })
+
+        return boundary
     }
 }
 
