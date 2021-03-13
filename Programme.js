@@ -77,7 +77,7 @@ function Programme (programme) {
 
     function getOverriddenTemperature (date) {
         if (self.isInOverridePeriod(date)) {
-            return getTemperatureForComfortState(programme.override.comfortState)
+            return programme.override.overrideTemp || getTemperatureForComfortState(programme.override.comfortState)
         }
         return NaN
     }

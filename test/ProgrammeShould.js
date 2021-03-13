@@ -187,7 +187,7 @@ describe('Programme', function () {
     })
 
     describe('overrides', function () {
-        it('should return programmed comfort temperature outside comfort period and override is active', function () {
+        it('should return programmed comfort temperature outside comfort period and override is active with no temp', function () {
             const now = new Date('12 Dec 1980 23:45:00')
             const midnight = new Date('13 Dec 1980 00:00:00')
             const programme = new Programme({
@@ -204,7 +204,7 @@ describe('Programme', function () {
             expect(programme.getCurrentTargetTemperature(now)).to.equal(21)
         })
 
-        it('should return programmed setback temperature inside comfort period and override is active', function () {
+        it('should return programmed setback temperature inside comfort period and override is active with no temp', function () {
             const now = new Date('12 Dec 1980 22:45:00')
             const midnight = new Date('13 Dec 1980 00:00:00')
             const programme = new Programme({
@@ -220,6 +220,23 @@ describe('Programme', function () {
             expect(programme.isInOverridePeriod(now)).to.equal(true)
             expect(programme.isInComfortMode(now)).to.equal(false)
             expect(programme.getCurrentTargetTemperature(now)).to.equal(14)
+        })
+
+        it('should return overridden temperature when override is active with overriden temp', function () {
+            const now = new Date('12 Dec 1980 23:45:00')
+            const midnight = new Date('13 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                override: {
+                    until: midnight,
+                    comfortState: true,
+                    overrideTemp: 23
+                },
+                schedule: defaultSchedule()
+            })
+
+            expect(programme.isInOverridePeriod(now)).to.equal(true)
+            expect(programme.getCurrentTargetTemperature(now)).to.equal(23)
         })
 
         it('should return programmed setback temperature outside comfort period and override has elapsed', function () {
