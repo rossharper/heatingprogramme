@@ -154,6 +154,16 @@ describe('Programme', function () {
 
             expect(programme.getCurrentTargetTemperature(date)).to.equal(20)
         })
+
+        it('should return period specific comfort temperature if set for comfort period', function () {
+            const programme = new Programme({
+                comfortTemp: 20,
+                schedule: scheduleWithComfortTemps(19)
+            })
+            const date = new Date('12 Dec 1980 18:00:00')
+
+            expect(programme.getCurrentTargetTemperature(date)).to.equal(19)
+        })
     })
 
     describe('comfort mode', function () {
@@ -406,6 +416,18 @@ describe('Programme', function () {
             }
         }
     })
+
+    function scheduleWithComfortTemps (comfortTemp) {
+        const schedule = defaultSchedule()
+
+        Object.keys(schedule).forEach((day) => {
+            schedule[day].comfortPeriods.forEach((comfortPeriod) => {
+                comfortPeriod.targetTemp = comfortTemp
+            })
+        })
+
+        return schedule
+    }
 
     function defaultSchedule () {
         return {

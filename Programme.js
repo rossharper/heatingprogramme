@@ -87,7 +87,12 @@ function Programme (programme) {
     }
 
     function getProgrammeTemperature (date) {
-        return getTemperatureForComfortState(isInAnyComfortPeriodForDate(date))
+        const comfortPeriod = comfortPeriodForDate(date)
+        if (comfortPeriod !== undefined) {
+            return comfortPeriod.targetTemp || getComfortTemperature()
+        }
+
+        return getSetbackTemperature()
     }
 
     function getComfortTemperature () {
@@ -121,13 +126,17 @@ function Programme (programme) {
     }
 
     function isInAnyComfortPeriodForDate (date) {
+        return comfortPeriodForDate(date) !== undefined
+    }
+
+    function comfortPeriodForDate (date) {
         const periodsForToday = programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods
-        for (let i = 0; i < periodsForToday.length; ++i) {
-            if (isInComfortPeriod(date, periodsForToday[i])) {
-                return true
+        for (const comfortPeriod of periodsForToday) {
+            if (isInComfortPeriod(date, comfortPeriod)) {
+                return comfortPeriod
             }
         }
-        return false
+        return undefined
     }
 }
 

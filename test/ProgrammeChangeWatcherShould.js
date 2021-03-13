@@ -1,10 +1,6 @@
 'use strict'
 
 const { expect } = require('chai')
-// const chai = require('chai')
-// const expect = chai.expect // we are using the "expect" style of Chai
-// const Programme = require('./../Programme')
-// const ProgrammeFileLoader = require('./../ProgrammeFileLoader')
 const fs = require('fs')
 const path = require('path')
 const programmeChangeWatcher = require('./../ProgrammeChangeWatcher')
