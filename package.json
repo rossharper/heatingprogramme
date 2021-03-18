@@ -14,7 +14,7 @@
   },
   "author": "Ross Harper <ross@rossharper.net>",
   "dependencies": {
-    "chokidar": "3.4.0",
+    "chokidar": "^3.4.0",
     "dateutil": "rossharper/dateutil#1.0.0"
   },
   "license": "Apache-2.0",
