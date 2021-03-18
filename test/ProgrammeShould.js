@@ -193,7 +193,7 @@ describe('Programme', function () {
             const programme = new Programme({
                 comfortTemp: 21,
                 override: {
-                    until: midnight,
+                    until: midnight.getTime(),
                     comfortState: true
                 },
                 schedule: defaultSchedule()
@@ -211,7 +211,7 @@ describe('Programme', function () {
                 comfortTemp: 21,
                 setbackTemp: 14,
                 override: {
-                    until: midnight,
+                    until: midnight.getTime(),
                     comfortState: false
                 },
                 schedule: defaultSchedule()
@@ -228,7 +228,7 @@ describe('Programme', function () {
             const programme = new Programme({
                 comfortTemp: 21,
                 override: {
-                    until: midnight,
+                    until: midnight.getTime(),
                     comfortState: true,
                     overrideTemp: 23
                 },
@@ -246,7 +246,7 @@ describe('Programme', function () {
                 comfortTemp: 21,
                 setbackTemp: 14,
                 override: {
-                    until: midnight,
+                    until: midnight.getTime(),
                     comfortState: true
                 },
                 schedule: defaultSchedule()
@@ -264,7 +264,7 @@ describe('Programme', function () {
                 comfortTemp: 21,
                 setbackTemp: 14,
                 override: {
-                    until: midnight,
+                    until: midnight.getTime(),
                     comfortState: false
                 },
                 schedule: defaultSchedule()
@@ -298,7 +298,7 @@ describe('Programme', function () {
                 comfortTemp: 21,
                 setbackTemp: 14,
                 override: {
-                    until: midnight
+                    until: midnight.getTime()
                 },
                 schedule: defaultSchedule()
             })
@@ -315,7 +315,7 @@ describe('Programme', function () {
                 comfortTemp: 21,
                 setbackTemp: 14,
                 override: {
-                    until: midnight
+                    until: midnight.getTime()
                 },
                 schedule: defaultSchedule()
             })
@@ -365,7 +365,7 @@ describe('Programme', function () {
                 setbackTemp: 14,
                 override: {
                     comfortState: true,
-                    until: midnight
+                    until: midnight.getTime()
                 },
                 schedule: defaultSchedule()
             })
@@ -383,7 +383,7 @@ describe('Programme', function () {
             const programme = new Programme({
                 comfortTemp: 21,
                 override: {
-                    until: midnight,
+                    until: midnight.getTime(),
                     comfortState: true
                 },
                 schedule: defaultSchedule()

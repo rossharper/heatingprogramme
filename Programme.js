@@ -46,7 +46,7 @@ function Programme (programme) {
         if (programme.override === undefined) {
             programme.override = {
                 comfortState: isInAnyComfortPeriodForDate(now),
-                until: nextComfortPeriodBoundary(now)
+                until: nextComfortPeriodBoundary(now).getTime()
             }
         }
         programme.override.overrideTemp = overrideTemperature
