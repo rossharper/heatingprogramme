@@ -1,6 +1,6 @@
 {
   "name": "heatingprogramme",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "description": "Module for loading and handling a heating programme/schedule.",
   "main": "index.js",
   "repository": {
