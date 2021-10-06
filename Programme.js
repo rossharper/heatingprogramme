@@ -18,6 +18,10 @@ function Programme (programme) {
         programme.comfortTemp = setPoint
     }
 
+    this.getSetbackTemperature = function () {
+        return getSetbackTemperature()
+    }
+
     this.getComfortPeriodsForDate = function (date) {
         return programme.schedule[DateUtil.getDayOfWeek(date)].comfortPeriods
     }

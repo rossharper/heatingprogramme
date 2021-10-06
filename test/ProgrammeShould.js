@@ -45,6 +45,22 @@ describe('Programme', function () {
         })
     })
 
+    describe('setback temperature', function () {
+        it('should return programmed setback temperature', function () {
+            const programme = new Programme({
+                setbackTemp: 11
+            })
+
+            expect(programme.getSetbackTemperature()).to.equal(11)
+        })
+
+        it('should return default setback temperature of 10 when no programme', function () {
+            const programme = new Programme()
+
+            expect(programme.getSetbackTemperature()).to.equal(10)
+        })
+    })
+
     describe('isHeatingEnabled()', function () {
         it('should return false when disabled in programme', function () {
             const programme = new Programme({
