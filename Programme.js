@@ -47,13 +47,18 @@ function Programme (programme) {
 
     this.setOverrideTemperature = function (overrideTemperature, now) {
         self.setHeatingOn()
-        if (programme.override === undefined) {
-            programme.override = {
-                comfortState: isInAnyComfortPeriodForDate(now),
-                until: nextComfortPeriodBoundary(now).getTime()
-            }
+
+        let comfortState = false
+        if (programme.override === undefined || programme.override.comfortState === undefined) {
+            comfortState = isInAnyComfortPeriodForDate(now)
+        } else {
+            comfortState = programme.override.comfortState
         }
-        programme.override.overrideTemp = overrideTemperature
+        programme.override = {
+            comfortState: comfortState,
+            until: nextComfortPeriodBoundary(now).getTime(),
+            overrideTemp: overrideTemperature
+        }
     }
 
     this.setComfortOverride = function (untilDate) {

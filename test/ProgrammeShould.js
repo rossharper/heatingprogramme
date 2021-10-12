@@ -428,6 +428,27 @@ describe('Programme', function () {
             expect(programme.isInOverridePeriod(afterPeriodTime)).to.equal(false)
         })
 
+        it('should set comfort override temperature with current period state and end when not in override when previous override expired', function () {
+            const inPeriodTime = new Date('12 Dec 1980 22:45:00')
+            const afterPeriodTime = new Date('12 Dec 1980 23:30:01')
+            const midnightPast = new Date('12 Dec 1980 00:00:00')
+            const programme = new Programme({
+                comfortTemp: 21,
+                schedule: defaultSchedule(),
+                override: {
+                    comfortState: true,
+                    until: midnightPast.getTime()
+                }
+            })
+
+            programme.setOverrideTemperature(23, inPeriodTime)
+
+            expect(programme.isInOverridePeriod(inPeriodTime)).to.equal(true)
+            expect(programme.isInComfortMode(inPeriodTime)).to.equal(true)
+            expect(programme.getCurrentTargetTemperature(inPeriodTime)).to.equal(23)
+            expect(programme.isInOverridePeriod(afterPeriodTime)).to.equal(false)
+        })
+
         it('should set setback override temperature with current period state and end when not in override and in setback period', function () {
             const inPeriodTime = new Date('12 Dec 1980 11:00:00')
             const afterPeriodTime = new Date('12 Dec 1980 17:30:01')
